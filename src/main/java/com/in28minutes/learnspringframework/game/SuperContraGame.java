@@ -1,5 +1,8 @@
 package com.in28minutes.learnspringframework.game;
 
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
+
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -10,6 +13,8 @@ import lombok.extern.slf4j.Slf4j;
  * @version 1 May 2023 - 15:26:33
  */
 @Slf4j
+@Component
+@Qualifier("SuperContraGameQualifier")
 public class SuperContraGame implements GamingConsole {
 
     @Override

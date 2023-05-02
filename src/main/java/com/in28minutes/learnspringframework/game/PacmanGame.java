@@ -1,5 +1,6 @@
 package com.in28minutes.learnspringframework.game;
 
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Component
+@Primary
 public class PacmanGame implements GamingConsole {
 
     @Override

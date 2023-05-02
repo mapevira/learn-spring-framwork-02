@@ -1,5 +1,6 @@
 package com.in28minutes.learnspringframework.game;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +18,7 @@ public class GameRunner {
 
     private GamingConsole game;
 
-    public GameRunner(GamingConsole game) {
+    public GameRunner(@Qualifier("SuperContraGameQualifier") GamingConsole game) {
         super();
         this.game = game;
     }
