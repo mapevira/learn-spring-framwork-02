@@ -1,4 +1,4 @@
-package com.in28minutes.learnspringframework.game;
+package com.in28minutes.learnspringframework.examples.a0;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
@@ -12,18 +12,16 @@ import org.springframework.context.annotation.Configuration;
  * @version 2 May 2023 - 15:08:33
  */
 @Configuration
-@ComponentScan("com.in28minutes.learnspringframework.game")
-public class GamingAppLauncherApplication {
+@ComponentScan
+public class SimpleSpringLauncherApplication {
 
     /**
      * @param args
      */
     public static void main(String[] args) {
 
-        try (var context = new AnnotationConfigApplicationContext(GamingAppLauncherApplication.class)) {
-            context.getBean(GamingConsole.class).up();
-
-            context.getBean(GameRunner.class).run();
+        try (var context = new AnnotationConfigApplicationContext(SimpleSpringLauncherApplication.class)) {
+            
         }
     }
 
