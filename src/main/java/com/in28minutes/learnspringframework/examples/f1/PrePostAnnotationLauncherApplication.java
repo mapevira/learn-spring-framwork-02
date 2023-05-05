@@ -5,10 +5,9 @@ import java.util.Arrays;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
 
-import jakarta.annotation.PostConstruct;
-import jakarta.annotation.PreDestroy;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -34,7 +33,7 @@ public class PrePostAnnotationLauncherApplication {
             if (log.isInfoEnabled()) {
                 log.info("Initialization of context is completed");
 
-                
+                System.out.println(context.getBean(BusinessService.class));
             }
         }
     }
@@ -42,31 +41,22 @@ public class PrePostAnnotationLauncherApplication {
 }
 
 @Slf4j
-@Component
-class SomeClass {
-    private SomeDependency someDependency;
+@Named
+class BusinessService {
+    private DataService dataService;
 
-    public SomeClass(SomeDependency someDependency) {
-        super();
-        this.someDependency = someDependency;
-        log.info("All dependencies are ready!");
+    public DataService getDataService() {
+        return dataService;
     }
 
-    @PostConstruct
-    public void initialize() {
-        someDependency.getReady();
+    @Inject
+    public void setDataService(DataService dataService) {
+        log.info("Setter injection");
+        this.dataService = dataService;
     }
 
-    @PreDestroy
-    public void cleanUp() {
-        log.info("Clean up");
-    }
 }
 
-@Slf4j
-@Component
-class SomeDependency {
-    public void getReady() {
-        log.info("Some logic using someDependency");
-    }
+@Named
+record DataService() {
 }
