@@ -1,11 +1,12 @@
-package com.in28minutes.learnspringframework.examples.d1;
+package com.in28minutes.learnspringframework.examples.e1;
 
 import java.util.Arrays;
 
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import lombok.extern.slf4j.Slf4j;
@@ -20,20 +21,25 @@ import lombok.extern.slf4j.Slf4j;
 @Configuration
 @ComponentScan
 @Slf4j
-public class LazyInitializationLauncherApplication {
+public class BeanScopesLauncherApplication {
 
     /**
      * @param args
      */
     public static void main(String[] args) {
 
-        try (var context = new AnnotationConfigApplicationContext(LazyInitializationLauncherApplication.class)) {
+        try (var context = new AnnotationConfigApplicationContext(BeanScopesLauncherApplication.class)) {
             Arrays.stream(context.getBeanDefinitionNames()).forEach(System.out::println);
 
             if (log.isInfoEnabled()) {
                 log.info("Initialization of context is completed");
 
-                context.getBean(ClassB.class).doSomething();
+                System.out.println(context.getBean(NormalClass.class));
+                System.out.println(context.getBean(NormalClass.class));
+
+                System.out.println(context.getBean(PrototypeClass.class));
+                System.out.println(context.getBean(PrototypeClass.class));
+                System.out.println(context.getBean(PrototypeClass.class));
             }
         }
     }
@@ -41,27 +47,12 @@ public class LazyInitializationLauncherApplication {
 }
 
 @Component
-record ClassA() {
+class NormalClass {
+
 }
 
-@Slf4j
-@Lazy
+@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 @Component
-class ClassB {
+class PrototypeClass {
 
-    private ClassA classA;
-
-    public ClassB(ClassA classA) {
-        super();
-        if (log.isInfoEnabled()) {
-            log.info("Some Initializer");
-        }
-        this.classA = classA;
-    }
-    
-    void doSomething() {
-        if (log.isInfoEnabled()) {
-            log.info("Do something");
-        }
-    }
 }
